@@ -2,6 +2,7 @@ import { Box, Divider, Group, Radio, RadioGroup, Text, useMantineTheme } from '@
 import { Welcome } from '../components/Welcome/Welcome';
 import { ColorSchemeToggle } from '../components/ColorSchemeToggle/ColorSchemeToggle';
 import BaseLayout from '../layouts/BaseLayout';
+import CreatePollForm from '../components/CreatePollForm/CreatePollForm';
 
 export default function HomePage() {
   const theme = useMantineTheme();
@@ -14,22 +15,10 @@ export default function HomePage() {
         sx={{
           backgroundColor: theme.colors.dark[8],
           borderRadius: theme.radius.md,
-          border: `2px solid ${theme.colors.blue[3]}`,
+          border: `2px solid ${theme.colors.green[3]}`,
         }}
       >
-        <Box>
-          <Text className="body-font-style" sx={{ fontSize: 28, color: theme.colors.blue[0] }}>
-            Who is the best person in the world?
-          </Text>
-          <Divider variant="dashed" />
-          <RadioGroup p="sm">
-            <Radio
-              value="Kyle"
-              label="Kyle testing blah"
-              classNames={{ label: 'body-font-style' }}
-            />
-          </RadioGroup>
-        </Box>
+        <CreatePollForm />
       </Group>
     </BaseLayout>
   );

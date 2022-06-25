@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Center, Container, Group, useMantineTheme } from '@mantine/core';
+import { Box, Center, Group, useMantineTheme } from '@mantine/core';
 import Navbar from '../components/Navbar/Navbar';
 
 type BaseLayoutProps = {
