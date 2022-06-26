@@ -9,14 +9,6 @@ const votesRouter = createRouter()
   .mutation('createVote', {
     input: createVoteSchema,
     resolve: async ({ input, ctx }) => {
-      if (!ctx.user) {
-        return db.optionVote.create({
-          data: {
-            optionId: input.optionId,
-            userId: undefined,
-          },
-        });
-      }
       const vote = await db.optionVote.findFirst({
         where: {
           userId: ctx.user.id,
