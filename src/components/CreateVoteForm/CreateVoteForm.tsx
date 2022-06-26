@@ -83,18 +83,25 @@ const CreateVoteForm = ({ poll }: CreateVoteFormProps) => {
           control={control}
           name="optionId"
           render={({ field }) => (
-            <RadioGroup
-              pb="md"
-              orientation="vertical"
-              spacing="md"
-              size="md"
-              color="green"
-              {...field}
-            >
-              {poll.options.map((option) => (
-                <Radio key={option.id} label={option.label} value={option.id} />
-              ))}
-            </RadioGroup>
+            <Group direction="column" grow spacing={5}>
+              {formState.errors.optionId?.message && (
+                <Text size="sm" color="red">
+                  {formState.errors.optionId.message}
+                </Text>
+              )}
+              <RadioGroup
+                pb="md"
+                orientation="vertical"
+                spacing="md"
+                size="md"
+                color="green"
+                {...field}
+              >
+                {poll.options.map((option) => (
+                  <Radio key={option.id} label={option.label} value={option.id} />
+                ))}
+              </RadioGroup>
+            </Group>
           )}
         />
         <Button color="green" type="submit" loading={formState.isSubmitting}>

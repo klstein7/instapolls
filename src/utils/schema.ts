@@ -11,6 +11,6 @@ export const createPollSchema = z.object({
 });
 
 export const createVoteSchema = z.object({
-  optionId: z.string().min(1),
+  optionId: z.string().min(1, { message: 'You must select an option to vote.' }),
   pollId: z.string().min(1),
 });

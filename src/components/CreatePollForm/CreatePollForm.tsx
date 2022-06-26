@@ -1,3 +1,4 @@
+import { zodResolver } from '@hookform/resolvers/zod';
 import {
   useMantineTheme,
   TextInput,
@@ -7,9 +8,7 @@ import {
   Button,
   Textarea,
   Box,
-  Divider,
 } from '@mantine/core';
-import { useFocusTrap } from '@mantine/hooks';
 import { ChevronDownIcon, ChevronRightIcon, ChevronUpIcon, TrashIcon } from '@modulz/radix-icons';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
@@ -29,6 +28,7 @@ const CreatePollForm = () => {
       description: '',
       options: [],
     },
+    resolver: zodResolver(createPollSchema),
   });
   const { fields, append, swap, remove } = useFieldArray({
     control,
@@ -60,6 +60,7 @@ const CreatePollForm = () => {
           variant="default"
           description="What is your question for this poll?"
           placeholder="Enter poll question..."
+          error={formState.errors.title?.message}
           {...register('title')}
         />
         {fields.length > 0 && (
@@ -113,6 +114,7 @@ const CreatePollForm = () => {
           placeholder="Enter an option and press enter..."
           description="Add an option to this poll"
           rightSection={<ChevronRightIcon />}
+          error={(formState.errors.options as any)?.message}
           onChange={(e) => setOptionLabel(e.target.value)}
           onKeyDown={(e) => {
             if (e.key === 'Enter') {
