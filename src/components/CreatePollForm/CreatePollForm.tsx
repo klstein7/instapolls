@@ -48,7 +48,7 @@ const CreatePollForm = () => {
         <Box>
           <Text
             className="body-font-style"
-            sx={{ fontSize: 20, fontWeight: 600, color: theme.colors.blue[0] }}
+            sx={{ fontSize: 20, fontWeight: 600, color: theme.colors.green[0] }}
           >
             Create poll
           </Text>
