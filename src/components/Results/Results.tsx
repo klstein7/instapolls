@@ -89,7 +89,7 @@ const Results = ({ voteCounts }: ResultsProps) => {
       <Group direction="row" position="right">
         <CloseButton onClick={() => setShowResults(false)} />
       </Group>
-      <Chart options={options} series={series} type="bar" width="500" />
+      <Chart options={options} series={series} type="bar" />
     </Group>
   );
 };

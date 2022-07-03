@@ -14,3 +14,7 @@ export const createVoteSchema = z.object({
   optionId: z.string().min(1, { message: 'You must select an option to vote.' }),
   pollId: z.string().min(1),
 });
+
+export const signInSchema = z.object({
+  email: z.string().email({ message: 'Please enter a valid email address.' }),
+});
