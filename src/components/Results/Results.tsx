@@ -1,82 +1,14 @@
-import { Box, CloseButton, Group, useMantineTheme } from '@mantine/core';
-import dynamic from 'next/dynamic';
+import { Box, CloseButton, Group, SegmentedControl, useMantineTheme } from '@mantine/core';
+import { useState } from 'react';
 
-import { useMemo } from 'react';
 import useShowResults from '../../store/useShowResults';
+import BarChart from '../BarChart/BarChart';
+import PieChart from '../PieChart/PieChart';
 
-const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
-
-type ResultsProps = {
-  voteCounts: {
-    optionName: string;
-    count: number;
-  }[];
-};
-
-const Results = ({ voteCounts }: ResultsProps) => {
+const Results = () => {
   const theme = useMantineTheme();
   const { setShowResults } = useShowResults();
-
-  const options: ApexCharts.ApexOptions = useMemo(
-    () => ({
-      chart: {
-        id: 'basic-bar',
-        foreColor: theme.colors.gray[3],
-        fontFamily: theme.fontFamily,
-        toolbar: {
-          show: false,
-        },
-      },
-      xaxis: {
-        categories: voteCounts.map((voteCount) => voteCount.optionName),
-        labels: {
-          show: false,
-        },
-        axisTicks: {
-          show: false,
-        },
-        axisBorder: {
-          color: theme.colors.dark[6],
-        },
-      },
-      yaxis: {
-        labels: {
-          style: {
-            fontSize: '14px',
-            fontWeight: 'bold',
-          },
-        },
-      },
-      fill: {
-        colors: [theme.colors.green[5]],
-      },
-      grid: {
-        borderColor: theme.colors.dark[6],
-      },
-      plotOptions: {
-        bar: {
-          horizontal: true,
-        },
-      },
-      dataLabels: {
-        enabled: false,
-      },
-      tooltip: {
-        theme: 'dark',
-      },
-    }),
-    [voteCounts]
-  );
-
-  const series: ApexAxisChartSeries = useMemo(
-    () => [
-      {
-        name: 'Results',
-        data: voteCounts.map((voteCount) => voteCount.count),
-      },
-    ],
-    [voteCounts]
-  );
+  const [chartType, setChartType] = useState('bar');
 
   return (
     <Group
@@ -87,9 +19,23 @@ const Results = ({ voteCounts }: ResultsProps) => {
       sx={{ borderRadius: theme.radius.md, border: `1px solid ${theme.colors.dark[6]}` }}
     >
       <Group direction="row" position="right">
+        <SegmentedControl
+          value={chartType}
+          size="xs"
+          color="green"
+          data={[
+            { label: 'Bar Chart', value: 'bar' },
+            {
+              label: 'Pie Chart',
+              value: 'pie',
+            },
+          ]}
+          onChange={(value) => setChartType(value)}
+        />
         <CloseButton onClick={() => setShowResults(false)} />
       </Group>
-      <Chart options={options} series={series} type="bar" />
+      {chartType === 'bar' && <BarChart />}
+      {chartType === 'pie' && <PieChart />}
     </Group>
   );
 };

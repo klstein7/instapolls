@@ -13,6 +13,7 @@ import { Poll, PollOption } from '@prisma/client';
 import { useMemo } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { z } from 'zod';
+import useVotesForPoll from '../../hooks/useVotesForPoll';
 import useShowResults from '../../store/useShowResults';
 import { createVoteSchema } from '../../utils/schema';
 import { useMutation, useQuery } from '../../utils/trpc';
@@ -34,10 +35,7 @@ const CreateVoteForm = ({ poll }: CreateVoteFormProps) => {
     resolver: zodResolver(createVoteSchema),
   });
   const createVoteMutation = useMutation('createVote');
-  const { refetch: refetchVotesForPoll, data: votesForPoll } = useQuery([
-    'votesForPost',
-    { pollId: poll.id },
-  ]);
+  const { refetch: refetchVotesForPoll, data: votesForPoll } = useVotesForPoll(poll.id);
 
   const voteCount = useMemo(() => {
     let count = 0;

@@ -35,7 +35,7 @@ const votesRouter = createRouter()
       });
     },
   })
-  .query('votesForPost', {
+  .query('votesForPoll', {
     input: z.object({
       pollId: z.string(),
     }),
